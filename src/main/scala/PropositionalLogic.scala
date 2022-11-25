@@ -19,8 +19,8 @@ object PropositionalLogic {
     case (f, a) => f(a)
   }
 
-  def example3[A]: Premise[Bottom] => Conclusion[A] =
-    bottom => example3(bottom) // This is OK, since we cannot construct bottom
+  def pbc[A]: Premise[Bottom] => Conclusion[A] =
+    bottom => pbc(bottom) // This is OK, since we cannot construct bottom
 
   def exercise1[A, B, C]
       : (Premise[A => B], Premise[B => C]) => Conclusion[A => C] = {
@@ -45,10 +45,10 @@ object PropositionalLogic {
         (
           pq => Right(pq(p)),
           {
-            case Left(np) => example3(np(p))
+            case Left(np) => pbc(np(p))
             case Right(q) => _ => q
           }
         )
-      case Right(np) => (_ => Left(np), _ => p => example3(np(p)))
+      case Right(np) => (_ => Left(np), _ => p => pbc(np(p)))
 
 }
